@@ -1,0 +1,31 @@
+specVersion: 1.0.0
+name: avalanche-dictionary
+version: "0.0.1"
+runner:
+  node:
+    name: '@subql/node-avalanche'
+    version: '>=0.0.5-2'
+  query:
+    name: '@subql/query'
+    version: '*'
+description: 'Avalanche Dictionnary'
+repository: ''
+
+schema:
+  file: './schema.graphql'
+
+network:
+  endpoint: 'avalanche.api.onfinality.io'
+  port: 9650
+  chainId: 'mainnet'
+  type: "avalanche"
+  chainName: "C"
+
+dataSources:
+  - kind: avalanche/Runtime
+    startBlock: 1
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleBlock
+          kind: avalanche/BlockHandler
