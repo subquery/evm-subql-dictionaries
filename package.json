@@ -19,7 +19,7 @@
   "author": "Ian He",
   "license": "Apache-2.0",
   "dependencies": {
-    "@subql/types-avalanche": "^0.0.3-1"
+    "@subql/types-avalanche": "^0.0.3-4"
   },
   "devDependencies": {
     "@ethersproject/bytes": "^5.6.1",
