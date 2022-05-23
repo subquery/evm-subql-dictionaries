@@ -7,7 +7,8 @@
     "build": "rm -rf dist && subql build",
     "prepack": "rm -rf dist && npm build",
     "test": "jest",
-    "codegen": "subql codegen"
+    "codegen": "subql codegen",
+    "start:docker": "docker-compose pull && docker-compose up --remove-orphans"
   },
   "homepage": "https://github.com/subquery/avalanche-dictionary",
   "repository": "github:subquery/avalanche-dictionary",

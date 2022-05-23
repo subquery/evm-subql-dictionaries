@@ -1,23 +1,24 @@
 specVersion: 1.0.0
-name: avalanche-dictionary
-version: "0.0.1"
+name: SubQuery Dictionary - Avalanche
+version: 1.0.0
 runner:
   node:
-    name: '@subql/node-avalanche'
-    version: '>=0.0.5-2'
+    name: "@subql/node-avalanche"
+    version: "*"
   query:
-    name: '@subql/query'
-    version: '*'
-description: 'Avalanche Dictionnary'
-repository: ''
-
+    name: "@subql/query"
+    version: "*"
+description: >-
+  A SubQuery Dictionary Project that provides increased indexing speed to all
+  projects
+repository: "https://github.com/subquery/avalanche-dictionary"
 schema:
-  file: './schema.graphql'
+  file: "./schema.graphql"
 
 network:
-  endpoint: 'avalanche.api.onfinality.io'
+  endpoint: "avalanche.api.onfinality.io"
   port: 9650
-  chainId: 'mainnet'
+  chainId: "mainnet"
   type: "avalanche"
   chainName: "C"
 
