@@ -16,11 +16,9 @@ schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: "avalanche.api.onfinality.io"
-  port: 9650
+  endpoint: "http://avalanche.api.onfinality.io:9650"
   chainId: "mainnet"
-  type: "avalanche"
-  chainName: "C"
+  subnet: "C"
 
 dataSources:
   - kind: avalanche/Runtime
