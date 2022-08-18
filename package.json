@@ -17,7 +17,7 @@
     "schema.graphql",
     "project.yaml"
   ],
-  "author": "Ian He",
+  "author": "SubQuery Team",
   "license": "Apache-2.0",
   "dependencies": {
     "@subql/types-avalanche": "^0.0.3-4"
