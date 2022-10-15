@@ -1,16 +1,16 @@
 import {
-   AvalancheBlock,
-   AvalancheLog,
-   AvalancheTransaction
-} from '@subql/types-avalanche';
+   EthereumBlock,
+   EthereumLog,
+   EthereumTransaction
+} from '@subql/types-ethereum';
 import { EvmLog, EvmTransaction } from "../types/models";
 import { inputToFunctionSighash, isZero } from './utils';
 
-export interface AvalancheResult extends ReadonlyArray<any> {
+export interface EthereumResult extends ReadonlyArray<any> {
     readonly [key: string]: any;
 }
 
-export async function handleBlock(block: AvalancheBlock): Promise<void> {
+export async function handleBlock(block: EthereumBlock): Promise<void> {
   const logsData = block.logs.map((log, idx) => handleLog(block.number, idx, log));
   const transactionsData = block.transactions.filter(tx => tx.to && tx.from).map((tx, idx) => handleTransaction(block.number, idx, tx));
   const logs = logsData.map(([log]) => log);
@@ -21,7 +21,7 @@ export async function handleBlock(block: AvalancheBlock): Promise<void> {
   ]);
 }
 
-export function handleLog(blockNumber: number, logIndex: number, log: AvalancheLog): [EvmLog, AvalancheLog] {
+export function handleLog(blockNumber: number, logIndex: number, log: EthereumLog): [EvmLog, EthereumLog] {
   const newLog = EvmLog.create({
     id: `${blockNumber}-${logIndex}`,
     address: log.address,
@@ -34,7 +34,7 @@ export function handleLog(blockNumber: number, logIndex: number, log: AvalancheL
   return [newLog, log];
 }
 
-export function handleTransaction(blockNumber: number, txIndex: number, transaction: AvalancheTransaction): [EvmTransaction, AvalancheTransaction] {
+export function handleTransaction(blockNumber: number, txIndex: number, transaction: EthereumTransaction): [EvmTransaction, EthereumTransaction] {
   const func = isZero(transaction.input) ? undefined : inputToFunctionSighash(transaction.input);
   const newTransaction = EvmTransaction.create({
     id: `${blockNumber}-${txIndex}`,
