@@ -1,16 +1,16 @@
 import {
-   EthereumBlock,
-   EthereumLog,
-   EthereumTransaction
-} from '@subql/types-ethereum';
+   FlareBlock,
+   FlareLog,
+   FlareTransaction
+} from '@subql/types-flare';
 import { EvmLog, EvmTransaction } from "../types/models";
 import { inputToFunctionSighash, isZero } from './utils';
 
-export interface EthereumResult extends ReadonlyArray<any> {
+export interface FlareResult extends ReadonlyArray<any> {
     readonly [key: string]: any;
 }
 
-export async function handleBlock(block: EthereumBlock): Promise<void> {
+export async function handleBlock(block: FlareBlock): Promise<void> {
   const logsData = block.logs.map((log, idx) => handleLog(block.number, idx, log));
   const transactionsData = block.transactions.filter(tx => tx.to && tx.from).map((tx, idx) => handleTransaction(block.number, idx, tx));
   const logs = logsData.map(([log]) => log);
@@ -21,7 +21,7 @@ export async function handleBlock(block: EthereumBlock): Promise<void> {
   ]);
 }
 
-export function handleLog(blockNumber: number, logIndex: number, log: EthereumLog): [EvmLog, EthereumLog] {
+export function handleLog(blockNumber: number, logIndex: number, log: FlareLog): [EvmLog, FlareLog] {
   const newLog = EvmLog.create({
     id: `${blockNumber}-${logIndex}`,
     address: log.address,
@@ -34,7 +34,7 @@ export function handleLog(blockNumber: number, logIndex: number, log: EthereumLo
   return [newLog, log];
 }
 
-export function handleTransaction(blockNumber: number, txIndex: number, transaction: EthereumTransaction): [EvmTransaction, EthereumTransaction] {
+export function handleTransaction(blockNumber: number, txIndex: number, transaction: FlareTransaction): [EvmTransaction, FlareTransaction] {
   const func = isZero(transaction.input) ? undefined : inputToFunctionSighash(transaction.input);
   const newTransaction = EvmTransaction.create({
     id: `${blockNumber}-${txIndex}`,

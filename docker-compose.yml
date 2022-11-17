@@ -10,8 +10,8 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
 
-  subquery-node-avalanche:
-    image: onfinality/subql-node-avalanche:latest
+  subquery-node-flare:
+    image: onfinality/subql-node-flare:latest
     depends_on:
       - "postgres"
     restart: always
@@ -31,7 +31,7 @@ services:
       - 3000:3000
     depends_on:
       - "postgres"
-      - "subquery-node-avalanche"
+      - "subquery-node-flare"
     restart: always
     environment:
       DB_USER: postgres
