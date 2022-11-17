@@ -3,7 +3,7 @@ name: SubQuery Dictionary - ethereum
 version: 1.0.0
 runner:
   node:
-    name: "@subql/node-ethereum"
+    name: "@subql/node-flare"
     version: "*"
   query:
     name: "@subql/query"
@@ -16,16 +16,14 @@ schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: wss://mainnet.infura.io/ws/v3/c3772903689441d290c68698bb022ba6
-  # endpoint:  https://api.avax-test.network
-  chainId: "1"
-  subnet: "mainnet"
+  endpoint: https://flare-api.flare.network/ext/C/rpc
+  chainId: "14"
 
 dataSources:
-  - kind: ethereum/Runtime
+  - kind: flare/Runtime
     startBlock: 1
     mapping:
       file: "./dist/index.js"
       handlers:
         - handler: handleBlock
-          kind: ethereum/BlockHandler
+          kind: flare/BlockHandler
