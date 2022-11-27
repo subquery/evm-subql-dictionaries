@@ -25,7 +25,7 @@ export function handleLog(blockNumber: number, logIndex: number, log: FlareLog):
   const newLog = EvmLog.create({
     id: `${blockNumber}-${logIndex}`,
     address: log.address,
-    blockHeight: blockNumber,
+    blockHeight: BigInt(blockNumber),
     topics0: log.topics[0],
     topics1: log.topics[1],
     topics2: log.topics[2],
@@ -38,7 +38,7 @@ export function handleTransaction(blockNumber: number, txIndex: number, transact
   const func = isZero(transaction.input) ? undefined : inputToFunctionSighash(transaction.input);
   const newTransaction = EvmTransaction.create({
     id: `${blockNumber}-${txIndex}`,
-    blockHeight: blockNumber,
+    blockHeight: BigInt(blockNumber),
     from: transaction.from,
     to: transaction.to,
     txHash: transaction.hash,
