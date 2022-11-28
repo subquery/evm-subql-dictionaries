@@ -1,0 +1,29 @@
+specVersion: 1.0.0
+name: flare-subql-dictionary
+version: 1.0.0
+runner:
+  node:
+    name: "@subql/node-flare"
+    version: "*"
+  query:
+    name: "@subql/query"
+    version: "*"
+description: >-
+  A SubQuery Dictionary Project that provides increased indexing speed to all
+  projects in the Flare Network
+repository: "https://github.com/subquery/flare-subql-dictionary"
+schema:
+  file: "./schema.graphql"
+
+network:
+  endpoint: https://flare-api.flare.network/ext/C/rpc
+  chainId: "14"
+
+dataSources:
+  - kind: flare/Runtime
+    startBlock: 1
+    mapping:
+      file: "./dist/index.js"
+      handlers:
+        - handler: handleBlock
+          kind: flare/BlockHandler

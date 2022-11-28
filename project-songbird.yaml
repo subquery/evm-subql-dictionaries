@@ -1,5 +1,5 @@
 specVersion: 1.0.0
-name: SubQuery Dictionary - ethereum
+name: flare-songbird-subql-dictionary
 version: 1.0.0
 runner:
   node:
@@ -10,14 +10,14 @@ runner:
     version: "*"
 description: >-
   A SubQuery Dictionary Project that provides increased indexing speed to all
-  projects
-repository: "https://github.com/subquery/ethereum-dictionary"
+  projects in the Flare Songbird Canary Network
+repository: "https://github.com/subquery/flare-subql-dictionary"
 schema:
   file: "./schema.graphql"
 
 network:
-  endpoint: https://flare-api.flare.network/ext/C/rpc
-  chainId: "14"
+  endpoint: https://songbird-api.flare.network/ext/C/rpc
+  chainId: "19"
 
 dataSources:
   - kind: flare/Runtime
