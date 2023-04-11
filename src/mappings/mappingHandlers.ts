@@ -12,7 +12,7 @@ export interface FlareResult extends ReadonlyArray<any> {
 
 export async function handleBlock(block: FlareBlock): Promise<void> {
   const logsData = block.logs.map((log, idx) => handleLog(block.number, idx, log));
-  const transactionsData = block.transactions.filter(tx => tx.to && tx.from).map((tx, idx) => handleTransaction(block.number, idx, tx));
+  const transactionsData = await Promise.all(block.transactions.filter(tx => tx.to && tx.from).map((tx, idx) => handleTransaction(block.number, idx, tx)));
   const logs = logsData.map(([log]) => log);
   const transactions = transactionsData.map(([tx]) => tx);
   await Promise.all([
@@ -34,7 +34,7 @@ export function handleLog(blockNumber: number, logIndex: number, log: FlareLog):
   return [newLog, log];
 }
 
-export function handleTransaction(blockNumber: number, txIndex: number, transaction: FlareTransaction): [EvmTransaction, FlareTransaction] {
+export async function handleTransaction(blockNumber: number, txIndex: number, transaction: FlareTransaction): Promise<[EvmTransaction, FlareTransaction]> {
   const func = isZero(transaction.input) ? undefined : inputToFunctionSighash(transaction.input);
   const newTransaction = EvmTransaction.create({
     id: `${blockNumber}-${txIndex}`,
@@ -42,7 +42,8 @@ export function handleTransaction(blockNumber: number, txIndex: number, transact
     from: transaction.from,
     to: transaction.to,
     txHash: transaction.hash,
-    success: transaction.receipt.status,
+    // If there are logs we can assume the tx was successful
+    success: (!!transaction.logs?.length) ?? (await transaction.receipt()).status,
     func
   });
   return [newTransaction, transaction];
