@@ -15,10 +15,14 @@ export async function handleBlock(block: FlareBlock): Promise<void> {
   const transactionsData = await Promise.all(block.transactions.filter(tx => tx.to && tx.from).map((tx, idx) => handleTransaction(block.number, idx, tx)));
   const logs = logsData.map(([log]) => log);
   const transactions = transactionsData.map(([tx]) => tx);
-  await Promise.all([
-    store.bulkCreate('EvmLog', logs),
-    store.bulkCreate('EvmTransaction', transactions)
-  ]);
+
+  // All save order should always follow this structure
+  for (const log of logs) {
+    await log.save()
+  }
+  for (const transaction of transactions) {
+    await transaction.save()
+  }
 }
 
 export function handleLog(blockNumber: number, logIndex: number, log: FlareLog): [EvmLog, FlareLog] {
